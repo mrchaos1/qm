@@ -47,8 +47,7 @@ class BlogController extends Controller
         ->setMaxResults(1)
         ->getQuery()
         ->getSingleResult();
-
-
+        
       return $this->render('@Blog/QMTheme/post.twig.html', ['post' => $post]);
     }
 
