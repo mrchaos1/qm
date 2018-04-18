@@ -1,0 +1,34 @@
+{% extends "@Blog/QMTheme/layout.html.twig" %}
+{% block content %}
+<section>
+  <div class="container">
+    <div class = 'row'>
+      <div class = 'col-md-9'>
+        <div class = 'well-container'>
+          <div class = 'well'>
+
+            {% set p =  post.postsTranslations[0] %}
+
+            <h1>{{ p.title }}</h1>
+            <div class="">
+              {{ p.text | raw }}
+
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class = 'col-md-3'>
+        <div class = 'well-container'>
+          <div class = 'well'>
+            <h1>Правая колонка</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

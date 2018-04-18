@@ -1,0 +1,33 @@
+{% extends "@Blog/QMTheme/layout.html.twig" %}
+{% block content %}
+<section>
+  <div class="container">
+    <div class = 'row'>
+      <div class = 'col-9'>
+        <div class = 'well-container'>
+          
+                <div class = 'row'>
+                  {% for post in posts %}
+                  <div class = 'col-6'>
+
+                    <a href = "{{ path('blog_post', { 'postSlug' : post.slug }) }}">
+                      <img width = '100%' src = 'http://bloody-disgusting.com/wp-content/uploads/2017/07/death-note-trailer.jpg' />
+                    </a>
+                    <h3><a href = "{{ path('blog_post', { 'postSlug' : post.slug }) }}">{{ post.postsTranslations[0].title }}</a></h3>
+                  </div>
+                  {% endfor %}
+              </div>
+        </div>
+      </div>
+      <div class = 'col-3'>
+        <div class = 'well-container'>
+          <div class = 'well'>
+            <h1>Правая колонка</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
