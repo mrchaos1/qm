@@ -8,9 +8,12 @@
 
     <title>{% block title %}QM-Animation{% endblock %}</title>
 
+    {% block stylesheet %}
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <!-- <link href="{{ asset("assets/css/style.css") }}" rel="stylesheet" type="text/css"> -->
+    <link href="{{ asset("assets/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset("assets/css/style.css") }}" rel="stylesheet" type="text/css">
+    {% endblock %}
 
   </head>
 
@@ -20,15 +23,8 @@
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
       <div class="container">
         <a class="navbar-brand js-scroll-trigger" href="{{ path('blog_homepage') }}">
-
-          <img class = "logo" src="" alt="QM-Animation" />
-
-
-      <!--
-      <img style = "max-height: 40px;" src = 'https://git-scm.com/images/logos/downloads/Git-Icon-White.png' />
-			Sywer -->
-
-		</a>
+          <img class = "logo" src="{{ asset("assets/images/logo.png") }}" alt="QM-Animation" />
+        </a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Меню
           <i class="fa fa-bars"></i>
@@ -124,10 +120,13 @@
             <i class="fa fa-chevron-up"></i>
           </a>
         </div>
-
-
-
       </body>
+      {% block javascript %}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script type="text/javascript" src = "{{ asset("assets/js/jquery.easing.compatibility.js") }}"></script>
+      <script type="text/javascript" src = "{{ asset("assets/js/bootstrap.bundle.min.js") }}"></script>
+      <script type="text/javascript" src = "{{ asset("assets/js/main.js") }}"></script>
+      {% endblock %}
 
 
 
