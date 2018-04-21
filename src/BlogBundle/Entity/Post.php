@@ -52,6 +52,24 @@ class Post
      */
     protected $media;
 
+    /**
+     * @var \Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="LAZY")
+     */
+    protected $thumbnail;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_popular", type="boolean", nullable=true)
+     */
+    protected $isPopular;
 
 
 
@@ -60,7 +78,7 @@ class Post
      */
     public function __construct()
     {
-        $this->postsTranslations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->postTranslations = new \Doctrine\Common\Collections\ArrayCollection();
       #  $this->media = new ArrayCollection();
     }
 
@@ -90,7 +108,7 @@ class Post
     /**
      * @ORM\OneToMany(targetEntity="PostTranslation", mappedBy="post", cascade={"all"})
      */
-    private $postsTranslations;
+    private $postTranslations;
 
     /**
      * Get id
@@ -173,37 +191,109 @@ class Post
     }
 
     /**
-     * Add postsTranslation
+     * Add postTranslation
      *
-     * @param \BlogBundle\Entity\PostTranslation $postsTranslation
+     * @param \BlogBundle\Entity\PostTranslation $postTranslation
      *
      * @return Post
      */
-    public function addPostsTranslation(\BlogBundle\Entity\PostTranslation $postsTranslation)
+    public function addPostTranslation(\BlogBundle\Entity\PostTranslation $postTranslation)
     {
-      #
-        $postsTranslation->setPost($this);
-        $this->postsTranslations[] = $postsTranslation;
+        # Add post to post tranlations
+        $postTranslation->setPost($this);
+        $this->postTranslations[] = $postTranslation;
         return $this;
     }
 
     /**
-     * Remove postsTranslation
+     * Remove postTranslation
      *
-     * @param \BlogBundle\Entity\PostTranslation $postsTranslation
+     * @param \BlogBundle\Entity\PostTranslation $postTranslation
      */
-    public function removePostsTranslation(\BlogBundle\Entity\PostTranslation $postsTranslation)
+    public function removePostTranslation(\BlogBundle\Entity\PostTranslation $postTranslation)
     {
-        $this->postsTranslations->removeElement($postsTranslation);
+        $this->postTranslations->removeElement($postTranslation);
     }
 
     /**
-     * Get postsTranslations
+     * Get postTranslations
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPostsTranslations()
+    public function getPostTranslations()
     {
-        return $this->postsTranslations;
+        return $this->postTranslations;
+    }
+
+    /**
+     * Set thumbnail
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $thumbnail
+     *
+     * @return Post
+     */
+    public function setThumbnail(\Application\Sonata\MediaBundle\Entity\Media $thumbnail = null)
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    /**
+     * Get thumbnail
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \BlogBundle\Entity\Category $category
+     *
+     * @return Post
+     */
+    public function setCategory(\BlogBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \BlogBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set isPopular
+     *
+     * @param boolean $isPopular
+     *
+     * @return Post
+     */
+    public function setIsPopular($isPopular)
+    {
+        $this->isPopular = $isPopular;
+
+        return $this;
+    }
+
+    /**
+     * Get isPopular
+     *
+     * @return boolean
+     */
+    public function getIsPopular()
+    {
+        return $this->isPopular;
     }
 }

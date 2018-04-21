@@ -1,0 +1,52 @@
+{% extends "@Admin/layout.html.twig" %}
+
+{% block content %}
+<section>
+  <div class="container">
+    <h1 class = 'text-center'>Edit Post</h1>
+
+    <div class = 'container'>
+        <form method = 'POST'>
+          {{ form_start(form) }}
+
+          {{ form_widget(form.slug, {'attr': {'class' : 'form-control'}}) }}<br />
+          {{ form_widget(form.sortOrder, {'attr': {'class' : 'form-control'}}) }}
+
+          <br />
+          {% for row in form.postTranslations %}
+
+
+            {{ form_row(row.title, {'attr': {'class' : 'form-control'}}) }}
+            <br />
+            {{ form_row(row.text, {'attr': {'class' : 'form-control'}}) }}
+            <br />
+
+          {% endfor %}
+
+          <button class = 'btn btn-small btn-primary' type = 'submit'>Save</button>
+
+          {{ form_end(form) }}
+        </form>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}
+{% block scripts %}
+  {{ parent() }}
+  <script src="https://cdn.ckeditor.com/4.9.2/full-all/ckeditor.js"></script>
+  <script>
+
+      {% for row in form.postTranslations %}
+
+        CKEDITOR.replace('{{ row.text.vars.id }}');
+
+      {% endfor %}
+
+  </script>
+
+
+
+{% endblock %}

@@ -1,0 +1,15 @@
+admin_homepage:
+    path:     /sadmin
+    defaults: { _controller: AdminBundle:Admin:index }
+
+admin_post_editor:
+    path:     /sadmin/post/{postId}
+    defaults: { _controller: AdminBundle:Admin:postEditor }
+
+admin_new_post_editor:
+    path:     /sadmin/post
+    defaults: { _controller: AdminBundle:Admin:postEditor }
+
+admin_new_posts_list:
+    path:     /sadmin/posts
+    defaults: { _controller: AdminBundle:Admin:postsList }

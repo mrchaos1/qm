@@ -82,7 +82,7 @@ class PostTranslation
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="postsTranslations", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="postTranslations", cascade={"persist"})
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
     private $post;

@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@BlogBundle/Resources/config/services.yml" }
+    - { resource: "@AdminBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -35,8 +36,11 @@ framework:
 
 # Twig Configuration
 twig:
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+    form_themes:
+        - '@SonataFormatter/Form/formatter.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -78,15 +82,15 @@ swiftmailer:
 
 
 sonata_media:
-    providers:
-        image:
-            resizer: sonata.media.resizer.square
+    # providers:
+    #     image:
+    #         resizer: sonata.media.resizer.square
 
     # if you don't use default namespace configuration
     class:
-        media             : App\Application\Sonata\MediaBundle\Entity\Media
-        gallery           : App\Application\Sonata\MediaBundle\Entity\Gallery
-        gallery_has_media : App\Application\Sonata\MediaBundle\Entity\GalleryHasMedia
+        media             : Application\Sonata\MediaBundle\Entity\Media
+        gallery           : Application\Sonata\MediaBundle\Entity\Gallery
+        gallery_has_media : Application\Sonata\MediaBundle\Entity\GalleryHasMedia
 
     db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
     default_context: default # you need to set a context
@@ -102,6 +106,16 @@ sonata_media:
             formats:
                 small: { width: 100 , quality: 70}
                 big:   { width: 500 , quality: 70}
+                preview: { width: 420, height: 270, quality: 70 }
+
+        post:
+            providers:
+                - sonata.media.provider.image
+
+            formats:
+                small: { width: 150 , quality: 95}
+                big:   { width: 500 , quality: 90}
+
 
     cdn:
         server:
@@ -123,3 +137,168 @@ sonata_block:
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
             contexts: [admin]
+
+
+
+sonata_admin:
+    assets:
+        extra_javascripts:
+            # ...
+            - bundles/ivoryckeditor/ckeditor.js
+            - bundles/sonataformatter/vendor/markitup-markitup/markitup/jquery.markitup.js
+            - bundles/sonataformatter/markitup/sets/markdown/set.js
+            - bundles/sonataformatter/markitup/sets/html/set.js
+            - bundles/sonataformatter/markitup/sets/textile/set.js
+
+        extra_stylesheets:
+            # ...
+            - bundles/sonataformatter/markitup/skins/sonata/style.css
+            - bundles/sonataformatter/markitup/sets/markdown/style.css
+            - bundles/sonataformatter/markitup/sets/html/style.css
+            - bundles/sonataformatter/markitup/sets/textile/style.css
+
+
+
+
+
+
+
+
+
+
+sonata_formatter:
+    default_formatter: text
+    formatters:
+        markdown:
+            service: sonata.formatter.text.markdown
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig #keep this commented unless you are using media bundle.
+
+
+        text:
+            service: sonata.formatter.text.text
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        rawhtml:
+            service: sonata.formatter.text.raw
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        richhtml:
+            service: sonata.formatter.text.raw
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        twig:
+            service: sonata.formatter.text.twigengine
+            extensions: [] # Twig formatter cannot have extensions
+
+
+
+ivory_ck_editor:
+    default_config: default
+
+    # configs:
+    #     my_config:
+
+    # plugins:
+    #     autoembed:
+    #         path:     "/assets/js/ckeditor_plugins/autoembed/"
+    #         filename: "plugin.js"
+    #
+    #     autolink:
+    #         path:     "/assets/js/ckeditor_plugins/autolink/"
+    #         filename: "plugin.js"
+    #
+    #     button:
+    #         path:     "/assets/js/ckeditor_plugins/button/"
+    #         filename: "plugin.js"
+    #
+    #     clipboard:
+    #         path:     "/assets/js/ckeditor_plugins/clipboard/"
+    #         filename: "plugin.js"
+    #
+    #     dialog:
+    #         path:     "/assets/js/ckeditor_plugins/dialog/"
+    #         filename: "plugin.js"
+    #
+    #     embed:
+    #         path:     "/assets/js/ckeditor_plugins/embed/"
+    #         filename: "plugin.js"
+    #
+    #     embedbase:
+    #         path:     "/assets/js/ckeditor_plugins/embedbase/"
+    #         filename: "plugin.js"
+    #
+    #     lineutils:
+    #         path:     "/assets/js/ckeditor_plugins/lineutils/"
+    #         filename: "plugin.js"
+    #
+    #     notification:
+    #         path:     "/assets/js/ckeditor_plugins/notification/"
+    #         filename: "plugin.js"
+    #
+    #     toolbar:
+    #         path:     "/assets/js/ckeditor_plugins/toolbar/"
+    #         filename: "plugin.js"
+    #
+    #     undo:
+    #         path:     "/assets/js/ckeditor_plugins/undo/"
+    #         filename: "plugin.js"
+    #
+    #     widget:
+    #         path:     "/assets/js/ckeditor_plugins/widget/"
+    #         filename: "plugin.js"
+    #
+    #     widgetselection:
+    #         path:     "/assets/js/ckeditor_plugins/widgetselection/"
+    #         filename: "plugin.js"
+    #
+    #     notificationaggregator:
+    #         path:     "/assets/js/ckeditor_plugins/notificationaggregator/"
+    #         filename: "plugin.js"
+
+
+    configs:
+        default:
+          #  embed_provider: '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}'
+          #  extraPlugins: 'embed,autoembed'
+            #extraPlugins: "dialog,videoembed,wordcount,notification,notificationaggregator,widget,widgetselection,lineutils,embedbase,embedsemantic"
+          #  extraPlugins: "notificationaggregator,autoembed,autolink,button,clipboard,dialog,embed,embedbase,lineutils,notification,toolbar,undo,widget,widgetselection"
+
+            #embed_provider :
+            #  - '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}'
+
+            #extraPlugins: "autogrow"
+            height: 500
+            toolbar:
+              - [Iframe]
+              - [Bold, Italic, Underline, -, Cut, Copy, Paste, PasteText, PasteFromWord, -, Undo, Redo, -, NumberedList, BulletedList, -, Outdent, Indent, -, Blockquote, -, Image, Link, Unlink, Table]
+              - [Format, Maximize, Source]
+
+            filebrowserBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            filebrowserImageBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            # Display images by default when clicking the image dialog browse button
+            filebrowserImageBrowseRouteParameters:
+                provider: sonata.media.provider.image
+            filebrowserUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserUploadRouteParameters:
+                provider: sonata.media.provider.file
+            # Upload file as image when sending a file from the image dialog
+            filebrowserImageUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserImageUploadRouteParameters:
+                provider: sonata.media.provider.image
+                context: my-context # Optional, to upload in a custom context
+                format: my-big # Optional, media format or original size returned to editor

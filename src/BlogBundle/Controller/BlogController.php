@@ -11,25 +11,46 @@ class BlogController extends Controller
 {
     public function indexAction()
     {
-
         $em = $this->getDoctrine()->getManager();
 
         $posts =
           $em->getRepository(Post::class)
           ->createQueryBuilder('p')
-          #->addSelect('pt')
-          #->join("p.postsTranslations", 'pt')
-          ->orderBy('p.id', 'ASC')
+          ->leftJoin("p.thumbnail", 'th')
+          ->addSelect('pt')
+
+          ->addSelect('th')
+          ->join("p.postTranslations", 'pt')
+          ->orderBy('p.sortOrder', 'ASC')
+          ->orderBy('p.id', 'DESC')
           ->getQuery()
           ->getResult();
 
-        #dump($posts); die;
+        $popularPosts =
+          $em->getRepository(Post::class)
+          ->createQueryBuilder('p')
+          ->leftJoin("p.thumbnail", 'th')
+          ->addSelect('pt')
+          ->addSelect('th')
+          ->addSelect('c')
+
+          ->join("p.postTranslations", 'pt')
+          ->leftJoin("p.category", 'c')
+          ->orderBy('p.id', 'ASC')
+          ->andWhere('p.isPopular = 1')
+          ->getQuery()
+          ->getResult();
+
+        #dump($posts);
+        #dump($popularPosts); die;
         $form = '';
 
         return $this->render('@Blog/QMTheme/mainPage.twig.html',
         [
-          'form'      => $form,
-          'posts'     => $posts,
+          'form'              => $form,
+          'posts'             => $posts,
+          'popularPosts'      => $popularPosts,
+
         ]);
     }
 
@@ -41,13 +62,14 @@ class BlogController extends Controller
         $em->getRepository(Post::class)
         ->createQueryBuilder('p')
         ->addSelect('pt')
-        ->join("p.postsTranslations", 'pt')
+      #  ->addSelect('th')
+        ->join("p.postTranslations", 'pt')
+        #->leftJoin("p.thumbnail", 'th')
         ->andWhere("p.slug = :slug")
         ->setParameter('slug', $postSlug)
         ->setMaxResults(1)
         ->getQuery()
         ->getSingleResult();
-        
       return $this->render('@Blog/QMTheme/post.twig.html', ['post' => $post]);
     }
 

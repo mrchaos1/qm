@@ -33,3 +33,55 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    admin.post:
+        class: BlogBundle\Admin\PostAdmin
+
+        #arguments: [~, BlogBundle\Entity\Post, ~]
+        arguments:
+            - ~
+            - BlogBundle\Entity\Post
+            - 'SonataAdminBundle:CRUD'
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              group: "Content"
+              label: "Posts"
+
+        calls:
+            - [ setTranslationDomain, [App]]
+
+        public: true
+
+    admin.post_translation:
+        class: BlogBundle\Admin\PostTranslationAdmin
+        arguments:
+            - ~
+            - BlogBundle\Entity\PostTranslation
+            - 'SonataAdminBundle:CRUD'
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              group: "На заходи сюда!"
+              label: "Post translations"
+
+        calls:
+            - [ setTranslationDomain, [App]]
+
+        public: true
+
+    admin.category:
+        class: BlogBundle\Admin\CategoryAdmin
+        arguments:
+            - ~
+            - BlogBundle\Entity\Category
+            - 'SonataAdminBundle:CRUD'
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              group: "Content"
+              label: "Categories"
+
+        calls:
+            - [ setTranslationDomain, [App]]
+
+        public: true
