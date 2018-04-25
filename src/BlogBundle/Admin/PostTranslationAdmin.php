@@ -47,8 +47,8 @@ class PostTranslationAdmin extends AbstractAdmin
           'choice_label'  => 'title',
       ));
       $formMapper->add('title', TextType::class);
-      $formMapper->add('text', SimpleFormatterType::class, ['format' => 'richhtml', 'ckeditor_context'  => 'default']);
-      $formMapper->add('shortText', SimpleFormatterType::class, ['format' => 'richhtml']);
+      $formMapper->add('text', SimpleFormatterType::class, ['required' => false, 'format' => 'richhtml', 'ckeditor_context'  => 'default']);
+      $formMapper->add('shortText', SimpleFormatterType::class, ['format' => 'richhtml', 'required' => false]);
 
 
       //

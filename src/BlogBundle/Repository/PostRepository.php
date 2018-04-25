@@ -10,4 +10,38 @@ namespace BlogBundle\Repository;
  */
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
+
+
+
+  public function getPosts($limit = false, $categorySlug = false)
+  {
+      $qb = $this->createQueryBuilder('p');
+
+      $qb->leftJoin("p.thumbnail", 'th');
+      $qb->addSelect('pt');
+      $qb->addSelect('th');
+
+      !$limit ?: $qb->setMaxResults($limit);
+
+      if($categorySlug)
+      {
+        #  dump($categorySlug); die;
+          $qb->addSelect('c');
+          $qb->leftJoin("p.category", 'c');
+          $qb->andWhere("c.slug = :categorySlug");
+          $qb->setParameter('categorySlug', $categorySlug);;
+      }
+
+      $qb->join("p.postTranslations", 'pt');
+
+
+
+      $qb->orderBy('p.id', 'ASC');
+
+
+      return $qb->getQuery();
+  }
+
+
+
 }

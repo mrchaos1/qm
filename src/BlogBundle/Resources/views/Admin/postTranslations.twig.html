@@ -1,0 +1,11 @@
+<td class="sonata-ba-list-field sonata-ba-list-field-text" objectid="49">
+
+  {% if object.postTranslations %}
+  <ul style = 'list-style:none; padding-left:0;'>
+  {% for trans in object.postTranslations %}
+      <li>{{ trans.language.name }}: <b>{{ trans.title }}</b></li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+
+</td>

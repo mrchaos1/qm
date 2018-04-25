@@ -96,6 +96,12 @@ class PostTranslation
     private $language;
 
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="views_number", type="integer", nullable=true)
+     */
+    private $viewsNumber;
 
 
     /**
@@ -347,4 +353,38 @@ class PostTranslation
     {
         return $this->language;
     }
+
+    /**
+     * Set viewsNumber
+     *
+     * @param integer $viewsNumber
+     *
+     * @return PostTranslation
+     */
+    public function setViewsNumber($viewsNumber)
+    {
+        $this->viewsNumber = $viewsNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get viewsNumber
+     *
+     * @return integer
+     */
+    public function getViewsNumber()
+    {
+        return $this->viewsNumber;
+    }
+
+
+
+
+
+
+
+
+
+
 }

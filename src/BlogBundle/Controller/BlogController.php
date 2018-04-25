@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BlogBundle\Form\PostTranslationType;
 use BlogBundle\Entity\Post;
 use \Application\Sonata\MediaBundle\Entity\Media;
+use Symfony\Component\HttpFoundation\Request;
 
 class BlogController extends Controller
 {
@@ -41,8 +42,6 @@ class BlogController extends Controller
           ->getQuery()
           ->getResult();
 
-        #dump($posts);
-        #dump($popularPosts); die;
         $form = '';
 
         return $this->render('@Blog/QMTheme/mainPage.twig.html',
@@ -53,6 +52,31 @@ class BlogController extends Controller
 
         ]);
     }
+
+    # Posts list
+    public function postsAction(Request $request, $categorySlug = false)
+    {
+        $em           = $this->getDoctrine()->getManager();
+        $postsQuery   = $em->getRepository(Post::class)->getPosts(false, $categorySlug);
+        $paginator    = $this->get('knp_paginator');
+        $limit        = 10;
+
+        $pagination   = $paginator->paginate
+        (
+            $postsQuery,
+            $request->query->getInt('page', 1),
+            $limit
+        );
+
+        return $this->render('@Blog/QMTheme/posts.twig.html',
+        [
+          'posts'             => $pagination->getItems(),
+          'pagination'        => $pagination,
+          'popularPosts'      => []
+        ]);
+
+    }
+
 
     # Display post
     public function postAction($postSlug)

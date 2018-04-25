@@ -89,6 +89,8 @@ class PostAdmin extends AbstractAdmin
       //     'property' => 'title'
       // ]);
       $formMapper->add('isPopular', CheckboxType::class, [ 'required' => false ]);
+
+
       $formMapper->add('postTranslations', 'sonata_type_collection',
       [
           'by_reference'  => false,
@@ -97,16 +99,17 @@ class PostAdmin extends AbstractAdmin
             'btn_add'         => false,
             'delete'          => false,
             'delete_options'  =>
-              [
-                  # You may otherwise choose to put the field but hide it
-                  'type'         => HiddenType::class,
-                  # In that case, you need to fill in the options as well
-                  'type_options' =>
-                  [
-                      'mapped'   => false,
-                      'required' => true,
-                  ]
-              ]
+            [
+                # You may otherwise choose to put the field but hide it
+                'type'         => HiddenType::class,
+
+                # In that case, you need to fill in the options as well
+                'type_options' =>
+                [
+                    'mapped'   => false,
+                    'required' => true,
+                ]
+            ]
           ]
       ],
       [
@@ -114,6 +117,7 @@ class PostAdmin extends AbstractAdmin
         'inline' => 'standard',
         'limit' => 1
       ]);
+
       $formMapper->add('sortOrder', TextType::class, [ 'required' => false ]);
 
   }
@@ -125,13 +129,21 @@ class PostAdmin extends AbstractAdmin
 
   protected function configureListFields(ListMapper $listMapper)
   {
+      $listMapper->add('_action_1', 'actions', array
+      (
+          'header_style'  => 'width: 50px',
+          'actions'       => array
+          (
+              'edit'    => [],
+          )
+      ));
       $listMapper->addIdentifier('id', 'text', ['header_style' => 'width: 25px',]);
       $listMapper->addIdentifier('slug');
       $listMapper->add('postTranslations', null,
       [
-          'type' => 'text',
-          'associated_property' => 'title',
-          'identifier'          => false,
+          'template'              => '@Blog/Admin/postTranslations.twig.html',
+          'type'                  => 'text',
+          'associated_property'   => 'title',
       ]);
       $listMapper->addIdentifier('sortOrder', 'text', ['header_style' => 'width: 25px',]);
       $listMapper->add('_action', 'actions', array
@@ -144,7 +156,7 @@ class PostAdmin extends AbstractAdmin
               'delete'  => []
           )
       ));
-      $listMapper->addIdentifier('datatimeAdded', 'date');
+      $listMapper->addIdentifier('datatimeAdded', 'text');
   }
 
 

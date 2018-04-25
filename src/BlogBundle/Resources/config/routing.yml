@@ -6,3 +6,11 @@ blog_homepage:
 blog_post:
     path:     /post/{postSlug}
     defaults: { _controller: BlogBundle:Blog:post }
+
+blog_category_posts:
+    path:     /posts/{categorySlug}
+    defaults: { _controller: BlogBundle:Blog:posts }
+
+blog_posts:
+    path:     /posts
+    defaults: { _controller: BlogBundle:Blog:posts }
