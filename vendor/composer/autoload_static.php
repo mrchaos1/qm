@@ -98,6 +98,7 @@ class ComposerStaticInit630517901b1acd6ca7a6397538712fde
         'F' => 
         array (
             'Fig\\Link\\' => 9,
+            'FOS\\UserBundle\\' => 15,
         ),
         'E' => 
         array (
@@ -334,6 +335,10 @@ class ComposerStaticInit630517901b1acd6ca7a6397538712fde
         'Fig\\Link\\' => 
         array (
             0 => __DIR__ . '/..' . '/fig/link-util/src',
+        ),
+        'FOS\\UserBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/friendsofsymfony/user-bundle',
         ),
         'Exporter\\' => 
         array (

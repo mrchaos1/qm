@@ -68,6 +68,7 @@ class PostAdmin extends AbstractAdmin
 
       $categories = $em->getRepository(Category::class)->findAll();
 
+      $formMapper->add('sortOrder', TextType::class, [ 'required' => false ]);
 
       # Create form
       $formMapper->add('slug', TextType::class);
@@ -90,9 +91,9 @@ class PostAdmin extends AbstractAdmin
       // ]);
       $formMapper->add('isPopular', CheckboxType::class, [ 'required' => false ]);
 
-
       $formMapper->add('postTranslations', 'sonata_type_collection',
       [
+        #  'template'      => '@Blog/Admin/postTranslations.twig.html',
           'by_reference'  => false,
           'type_options'  =>
           [
@@ -118,7 +119,6 @@ class PostAdmin extends AbstractAdmin
         'limit' => 1
       ]);
 
-      $formMapper->add('sortOrder', TextType::class, [ 'required' => false ]);
 
   }
 
