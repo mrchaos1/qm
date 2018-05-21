@@ -76,7 +76,31 @@ class BlogController extends Controller
         ]);
 
     }
+	
+	
+	public function sideBar()
+	{
+		$em     = $this->getDoctrine()->getManager();
+		$popularPosts =
+          $em->getRepository(Post::class)
+          ->createQueryBuilder('p')
+          ->leftJoin("p.thumbnail", 'th')
+          ->addSelect('pt')
+          ->addSelect('th')
+          ->addSelect('c')
 
+          ->join("p.postTranslations", 'pt')
+          ->leftJoin("p.category", 'c')
+          ->orderBy('p.id', 'ASC')
+          ->andWhere('p.isPopular = 1')
+          ->getQuery()
+          ->getResult();
+
+
+		return $this->render('@Blog/QMTheme/sideBar.twig.html', ['popularPosts' => $popularPosts]);
+
+	}
+	
 
     # Display post
     public function postAction($postSlug)

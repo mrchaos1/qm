@@ -1,4 +1,10 @@
 {% extends "@Blog/QMTheme/layout.html.twig" %}
+{% set p =  post.postTranslations[0] %}
+
+{% block title %}{{ p.metaTitle ? p.metaTitle : p.title}}{% endblock %}
+{% block meta_description %}{{ p.metaDescription}}{% endblock %}
+{% block meta_keywords %}{{ p.metaKeywords}}{% endblock %}
+
 {% block content %}
 <section>
   <div class="container">
@@ -7,7 +13,6 @@
         <div class = 'well-container'>
           <div class = 'well'>
 
-            {% set p =  post.postTranslations[0] %}
 
             <h1>{{ p.title }}</h1>
             <div class="">
@@ -20,13 +25,10 @@
           </div>
         </div>
       </div>
-      <div class = 'col-md-3'>
-        <div class = 'well-container'>
-          <div class = 'well'>
-            <h1>Правая колонка</h1>
-          </div>
-        </div>
-      </div>
+      
+       {{ render(controller('BlogBundle\\Controller\\BlogController::sideBar')) }}
+
+    
     </div>
   </div>
 </section>

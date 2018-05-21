@@ -5,17 +5,16 @@
     <div class = 'row'>
       <div class = 'col-md-9 col-sm-12'>
         <div class = 'well-container'>
-
                 <div class = 'row'>
                   {% for post in posts %}
                   <div class = 'col-6 mp-item'>
 
                     <a class = 'mp-item-image-link' href = "{{ path('blog_post', { 'postSlug' : post.slug }) }}">
-                      {% media post.thumbnail, 'default_big' with {'width': '100%', 'height' : 'auto', 'class' : 'mp-item-image' }  %}
+										
+						<div class="mp-item-image-background" style="background:url({% path post.thumbnail, 'default_big' %}) no-repeat; background-size:auto 100%; background-position:center;" ></div>
+					
 
 
-                      {#<img width = '100%' src = 'http://bloody-disgusting.com/wp-content/uploads/2017/07/death-note-trailer.jpg' />
-                      #}
                     </a>
                     <h3 class = 'mp-item-title'>
                       <a href = "{{ path('blog_post', { 'postSlug' : post.slug }) }}">{{ post.postTranslations[0].title }}</a>
@@ -25,50 +24,9 @@
               </div>
         </div>
       </div>
-      <div class = 'col-md-3 col-sm-12'>
-
-        <div class = 'row'>
-          {% for key, post in popularPosts %}
-          <!-- <div class = 'well-container col-md 12 col-sm-6'> -->
-          <div class = 'well-container col-md 12 col-sm-6'>
-            <div class = 'right-col-most-popular'>
-
-              {% if key == 0 %}
-              <div class = 'right-col-most-popular-header'>
-                <h4>Самое читаемое</h4>
-              </div>
-              {% endif %}
-
-              {% set url    = path('blog_post', { 'postSlug' : post.slug }) %}
-              {% set trans  = post.postTranslations[0] %}
-              <div>
-                <a href = "{{ url }}" >
-                  {% media post.thumbnail, 'default_big' with {'width': '100%', 'height' : 'auto', 'class' : 'right-col-most-popular-image' }  %}
-                </a>
-              </div>
-              <div class = 'right-col-most-popular-content'>
-                <div class = 'right-col-most-popular-description'>
-
-                  <a href = "{{ url }}" >
-                    {{ trans.shortText | raw }}
-                  </a>
-                </div>
-                <div class = 'right-col-most-popular-footer' >
-                  <time class = 'right-col-most-popular-time' >{{ post.datetimeAdded | date('d.m.Y') }}</time>
-                  {% if post.category %}
-                  <span class = 'right-col-most-popular-category' >{{ post.category.title }}</span>
-                  {% endif %}
-                </div>
-              </div>
-
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-
-
-
-      </div>
+      
+       {{ render(controller('BlogBundle\\Controller\\BlogController::sideBar')) }}
+    
     </div>
   </div>
 </section>

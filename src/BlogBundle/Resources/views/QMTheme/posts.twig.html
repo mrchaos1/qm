@@ -29,50 +29,9 @@
               </div>
         </div>
       </div>
-      <div class = 'col-md-3 col-sm-12'>
+      {{ render(controller('BlogBundle\\Controller\\BlogController::sideBar')) }}
 
-        <div class = 'row'>
-          {% for key, post in popularPosts %}
-          <!-- <div class = 'well-container col-md 12 col-sm-6'> -->
-          <div class = 'well-container col-md 12 col-sm-6'>
-            <div class = 'right-col-most-popular'>
-
-              {% if key == 0 %}
-              <div class = 'right-col-most-popular-header'>
-                <h4>Самое читаемое</h4>
-              </div>
-              {% endif %}
-
-              {% set url    = path('blog_post', { 'postSlug' : post.slug }) %}
-              {% set trans  = post.postTranslations[0] %}
-              <div>
-                <a href = "{{ url }}" >
-                  {% media post.thumbnail, 'default_big' with {'width': '100%', 'height' : 'auto', 'class' : 'right-col-most-popular-image' }  %}
-                </a>
-              </div>
-              <div class = 'right-col-most-popular-content'>
-                <div class = 'right-col-most-popular-description'>
-
-                  <a href = "{{ url }}" >
-                    {{ trans.shortText | raw }}
-                  </a>
-                </div>
-                <div class = 'right-col-most-popular-footer' >
-                  <time class = 'right-col-most-popular-time' >{{ post.datetimeAdded | date('d.m.Y') }}</time>
-                  {% if post.category %}
-                  <span class = 'right-col-most-popular-category' >{{ post.category.title }}</span>
-                  {% endif %}
-                </div>
-              </div>
-
-            </div>
-          </div>
-        {% endfor %}
-        </div>
-
-
-
-      </div>
+   
     </div>
 
 
