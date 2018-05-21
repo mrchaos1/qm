@@ -14,3 +14,7 @@ blog_category_posts:
 blog_posts:
     path:     /posts
     defaults: { _controller: BlogBundle:Blog:posts }
+
+blog_products:
+    path:     /products
+    defaults: { _controller: BlogBundle:Product:products }

@@ -1,0 +1,49 @@
+{% extends "@Blog/QMTheme/layout.html.twig" %}
+{% block content %}
+<section>
+  <div class="container">
+    <div class = 'row'>
+      <div class = 'col-md-9 col-sm-12'>
+        <div class = 'well-container'>
+
+                <div class = 'row'>
+                  {% if posts %}
+                  {% for post in posts %}
+                  <div class = 'col-6 mp-item'>
+
+                    <a class = 'mp-item-image-link' href = "{{ path('blog_post', { 'postSlug' : post.slug }) }}">
+                      {% media post.thumbnail, 'default_big' with {'width': '100%', 'height' : 'auto', 'class' : 'mp-item-image' }  %}
+
+
+                      {#<img width = '100%' src = 'http://bloody-disgusting.com/wp-content/uploads/2017/07/death-note-trailer.jpg' />
+                      #}
+                    </a>
+                    <h3 class = 'mp-item-title'>
+                      <a href = "{{ path('blog_post', { 'postSlug' : post.slug }) }}">{{ post.postTranslations[0].title }}</a>
+                    </h3>
+                  </div>
+                  {% endfor %}
+                  {% else %}
+                      <div class = 'no-result text-center'>Ничего не найдено</div>
+                  {% endif %}
+              </div>
+        </div>
+      </div>
+      {{ render(controller('BlogBundle\\Controller\\BlogController::sideBar')) }}
+
+   
+    </div>
+
+
+    <div class="navigation">
+      {{ knp_pagination_render(pagination) }}
+    </div>
+
+  </div>
+
+
+
+
+</section>
+
+{% endblock %}
