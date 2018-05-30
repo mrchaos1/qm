@@ -10,7 +10,7 @@ class ProductController extends Controller
 
     public function productsAction()
     {
-        
+        return $this->render('@Blog/QMTheme/product/products.twig.html');
     }
 
 }

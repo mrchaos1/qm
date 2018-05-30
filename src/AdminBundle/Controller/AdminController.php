@@ -28,6 +28,8 @@ class AdminController extends Controller
 {
     public function indexAction()
     {
+
+
         return $this->render('@Admin/index.html.twig');
     }
 
@@ -87,7 +89,7 @@ class AdminController extends Controller
           ->getSingleResult();
 
 
-          
+
 
     }
 

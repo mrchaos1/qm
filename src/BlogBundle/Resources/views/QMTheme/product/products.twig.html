@@ -1,42 +1,49 @@
 {% extends "@Blog/QMTheme/layout.html.twig" %}
+{% block stylesheet %}
+{{ parent() }}
+<style media="screen">
+
+    .pp-item {  height:300px; position: relative; margin-top: 30px;}
+    .pp-item-background { z-index:0; position: absolute; width: 100%; height: 100%; top:0; }
+    .pp-item-description { padding: 20px; background-color:#505050d4; color:#fff; height:100%; float:left; position:relative; z-index:1 }
+    .pp-item-description h3 { }
+    .pp-item-description h3 > span { background-color: #295cc6; color: #fff; }
+    .pp-item-text { margin-top: 20px; }
+</style>
+{% endblock %}
 {% block content %}
 <section>
   <div class="container">
     <div class = 'row'>
       <div class = 'col-md-9 col-sm-12'>
-        <div class = 'well-container'>
 
-                <div class = 'row'>
-                  {% if posts %}
-                  {% for post in posts %}
-                  <div class = 'col-6 mp-item'>
+          <div>
+            <div class="pp-item">
+                <div class="pp-item-description">
+                    <h3><span>Видеокурс</span><br /> инфографика с нуля</h3>
+                    <p><b>Приложения:</b> Moho, After Effects</p>
+                    <p><b>Продолжительность:</b> 4 часа</p>
+                    <p><b>Стоимость:</b> 50 рублей</p>
+                </div>
 
-                    <a class = 'mp-item-image-link' href = "{{ path('blog_post', { 'postSlug' : post.slug }) }}">
-                      {% media post.thumbnail, 'default_big' with {'width': '100%', 'height' : 'auto', 'class' : 'mp-item-image' }  %}
+                <div class="pp-item-background" style="background:url(https://images.pexels.com/photos/370799/pexels-photo-370799.jpeg?auto=compress&cs=tinysrgb&h=350) no-repeat; background-size:100% auto;">
+
+                </div>
 
 
-                      {#<img width = '100%' src = 'http://bloody-disgusting.com/wp-content/uploads/2017/07/death-note-trailer.jpg' />
-                      #}
-                    </a>
-                    <h3 class = 'mp-item-title'>
-                      <a href = "{{ path('blog_post', { 'postSlug' : post.slug }) }}">{{ post.postTranslations[0].title }}</a>
-                    </h3>
-                  </div>
-                  {% endfor %}
-                  {% else %}
-                      <div class = 'no-result text-center'>Ничего не найдено</div>
-                  {% endif %}
-              </div>
-        </div>
+            </div>
+            <div class="pp-item-text">
+
+                <p>Описание ОписаниеОписание ОписаниеОписание ОписаниеОписание ОписаниеОписание ОписаниеОписание Описание</p>
+            </div>
+
+          </div>
+
+
       </div>
       {{ render(controller('BlogBundle\\Controller\\BlogController::sideBar')) }}
 
-   
-    </div>
 
-
-    <div class="navigation">
-      {{ knp_pagination_render(pagination) }}
     </div>
 
   </div>
