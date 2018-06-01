@@ -7,12 +7,15 @@ use BlogBundle\Form\PostTranslationType;
 use BlogBundle\Entity\Post;
 use \Application\Sonata\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class BlogController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em   = $this->getDoctrine()->getManager();
 
         $posts =
           $em->getRepository(Post::class)
@@ -56,10 +59,20 @@ class BlogController extends Controller
     # Posts list
     public function postsAction(Request $request, $categorySlug = false)
     {
+        $form = $this->getSearchForm();
+        $form->handleRequest($request);
+        $search = false;
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $search = $form->getData()['search'];
+            $search = !empty($search) ? $search : false;
+        }
+
         $em           = $this->getDoctrine()->getManager();
-        $postsQuery   = $em->getRepository(Post::class)->getPosts(false, $categorySlug);
+        $postsQuery   = $em->getRepository(Post::class)->getPosts(false, $categorySlug, $search);
         $paginator    = $this->get('knp_paginator');
-        $limit        = 10;
+        $limit        = 4;
 
         $pagination   = $paginator->paginate
         (
@@ -71,13 +84,34 @@ class BlogController extends Controller
         return $this->render('@Blog/QMTheme/posts.twig.html',
         [
           'posts'             => $pagination->getItems(),
+          'search'            => $search,
           'pagination'        => $pagination,
           'popularPosts'      => []
         ]);
 
     }
-	
-	
+
+
+  protected function getSearchForm()
+  {
+      $form = $this->createFormBuilder()
+        ->add('search', TextType::class, ['label' => 'Поиск'  ])
+        ->add('submit', SubmitType::class, array('label' => 'Поиск'))
+        ->setAction($this->generateUrl('blog_posts'))
+        ->setMethod('GET')
+        ->getForm();
+
+      return $form;
+  }
+
+  public function searchFormRender(Request $request)
+  {
+      $form = $this->getSearchForm();
+      $form->handleRequest($request);
+
+      return $this->render('@Blog/QMTheme/searchBlock.html.twig', [ 'form' => $form->createView() ]);
+  }
+
 	public function sideBar()
 	{
 		$em     = $this->getDoctrine()->getManager();
@@ -100,7 +134,7 @@ class BlogController extends Controller
 		return $this->render('@Blog/QMTheme/sideBar.twig.html', ['popularPosts' => $popularPosts]);
 
 	}
-	
+
 
     # Display post
     public function postAction($postSlug)

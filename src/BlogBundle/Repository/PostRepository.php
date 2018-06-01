@@ -13,7 +13,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
 
 
-  public function getPosts($limit = false, $categorySlug = false)
+  public function getPosts($limit = false, $categorySlug = false, $search = false)
   {
       $qb = $this->createQueryBuilder('p');
 
@@ -25,19 +25,20 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
       if($categorySlug)
       {
-        #  dump($categorySlug); die;
           $qb->addSelect('c');
           $qb->leftJoin("p.category", 'c');
           $qb->andWhere("c.slug = :categorySlug");
           $qb->setParameter('categorySlug', $categorySlug);;
       }
-
+      
       $qb->join("p.postTranslations", 'pt');
 
-
-
+      if($search)
+      {
+          $qb->andWhere("(pt.title LIKE :search OR pt.text LIKE :search)");
+          $qb->setParameter('search', "%$search%");
+      }
       $qb->orderBy('p.id', 'ASC');
-
 
       return $qb->getQuery();
   }
