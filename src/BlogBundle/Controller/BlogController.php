@@ -72,7 +72,7 @@ class BlogController extends Controller
         $em           = $this->getDoctrine()->getManager();
         $postsQuery   = $em->getRepository(Post::class)->getPosts(false, $categorySlug, $search);
         $paginator    = $this->get('knp_paginator');
-        $limit        = 4;
+        $limit        = 10;
 
         $pagination   = $paginator->paginate
         (
