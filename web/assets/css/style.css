@@ -473,4 +473,4 @@ input[type="color"]:focus,
 .thrive-search-input:active, .thrive-search-input:blur { box-shadow: none; }
 .thrive-search-input input {   padding-left: 30px;     border: none;   border-bottom: 1px solid #ccc;   border-radius: 0;}
 .thrive-search-input {  margin-bottom:20px; position: relative; }
-.thrive-search-input .search-icon {   position: absolute; top: 11px; }
+.thrive-search-input .search-icon {   position: absolute; top: 11.1px; }
