@@ -66,3 +66,21 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+Redirect 301 /index.php/101-ksm-part1 /post/Urok1
+Redirect 301 /index.php/100-ksm-part2 /post/Urok2
+Redirect 301 /index.php/99-ksm-part3 /post/Urok3
+Redirect 301 /index.php/98-ksm-part4 /post/Urok4
+Redirect 301 /index.php/97-ksm-part5 /post/Urok5
+Redirect 301 /index.php/96-part6 /post/Urok6
+Redirect 301 /index.php/104-kak-zarabatyvat-na-multfilmakh /post/Urok7
+Redirect 301 /index.php/kurs-multiplic/106-videokurs-kak-sdelat-krutogo-i-udobnogo-personazha /post/Urok8
+Redirect 301 /index.php/110-ksm-part9 /post/Urok9
+Redirect 301 /index.php/111-ksm-part10 /post/Urok10
+Redirect 301 /index.php/116-11-sozdanie-skeleta-v-anime-studio-pro-tipichnye-oshibki /post/Urok11
+Redirect 301 /index.php/119-12-pravilo-tretei /post/Urok12
+Redirect 301 /index.php/120-top-multfilmi /post/Urok13
+Redirect 301 /index.php/121-predmety /post/Urok14
+Redirect 301 /index.php/122-15-kak-polzovatsya-anime-studio-pro /post/Urok15
+Redirect 301 /index.php/125-15-kak-polzovatsya-anime-studio-pro-2 /post/Urok16
+Redirect 301 /index.php/126-17-blog /post/Urok17
